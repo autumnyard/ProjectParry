@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace AutumnYard.ProjectParry
 {
-    public sealed class PlayerMovement : IPlayerMover
+    public sealed class PlayerMovement : IInputReceiver
     {
         private readonly PlayerConfiguration _configuration;
         private readonly Rigidbody _rb;
@@ -13,7 +13,7 @@ namespace AutumnYard.ProjectParry
             _rb = rb;
         }
 
-        public void Update(in PlayerInputs inputs)
+        public void UpdateWithInputs(in PlayerInputs inputs)
         {
             var asd = new Vector3(
                 Mathf.Lerp(0, inputs.horizontalAxis * _configuration.speed, 0.8f),
