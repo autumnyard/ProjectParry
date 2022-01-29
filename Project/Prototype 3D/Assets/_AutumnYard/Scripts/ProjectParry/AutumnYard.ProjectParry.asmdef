@@ -1,0 +1,16 @@
+{
+    "name": "AutumnYard.ProjectParry",
+    "rootNamespace": "AutumnYard.ProjectParry",
+    "references": [
+        "GUID:9efc6bba543b6cd4db214f04a1c6e87c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
