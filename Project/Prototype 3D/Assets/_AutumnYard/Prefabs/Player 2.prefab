@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: playerNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1042247580590512905, guid: e2e07243d12a9e8419502d42b2bbb29c,
+        type: 3}
+      propertyPath: map
+      value: 
+      objectReference: {fileID: 11400000, guid: 19e6a418f0a6b534abf82f0751cabeaf,
+        type: 2}
+    - target: {fileID: 1042247580590512905, guid: e2e07243d12a9e8419502d42b2bbb29c,
+        type: 3}
+      propertyPath: attack
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042247580590512905, guid: e2e07243d12a9e8419502d42b2bbb29c,
+        type: 3}
+      propertyPath: defense
+      value: 118
+      objectReference: {fileID: 0}
     - target: {fileID: 4214347586774746280, guid: e2e07243d12a9e8419502d42b2bbb29c,
         type: 3}
       propertyPath: m_Name

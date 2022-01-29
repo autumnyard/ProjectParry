@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 4214347586774746284}
   - component: {fileID: 329688487714598423}
   - component: {fileID: 1546775209691849671}
+  - component: {fileID: 1042247580590512905}
   - component: {fileID: 4214347586774746281}
   - component: {fileID: 4214347586774746285}
   m_Layer: 0
@@ -167,6 +168,19 @@ MonoBehaviour:
   defense: {fileID: 6121722313708895716}
   attackSpan: 0.2
   parrySpan: 0.1
+--- !u!114 &1042247580590512905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4214347586774746280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac35175e1061655459c081252184ff7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 11400000, guid: 970d8a99bea0beb43b7151f2d447b989, type: 2}
 --- !u!136 &4214347586774746281
 CapsuleCollider:
   m_ObjectHideFlags: 0

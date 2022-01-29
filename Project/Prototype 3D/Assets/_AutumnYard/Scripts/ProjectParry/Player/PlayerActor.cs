@@ -15,7 +15,15 @@ namespace AutumnYard.ProjectParry
 
         private void Awake()
         {
-            _inputProvider = new InputProvider_placeholder();
+            if (_inputProvider == null)
+            {
+                _inputProvider = GetComponent<IInputProvider>();
+            }
+            if (_inputProvider == null)
+            {
+                _inputProvider = new InputProvider_placeholder();
+            }
+
             _movement = new PlayerMovement(configuration, GetComponent<Rigidbody>());
             _attack = GetComponent<PlayerAttack>();
             _inputs = new PlayerInputs();
@@ -23,15 +31,7 @@ namespace AutumnYard.ProjectParry
 
         private void Update()
         {
-            if (playerNumber == 1)
-            {
-                _inputProvider.GetInputs(ref _inputs);
-            }
-            else
-            {
-
-            }
-
+            _inputProvider.GetInputs(ref _inputs);
             _movement.UpdateWithInputs(in _inputs);
             _attack.UpdateWithInputs(in _inputs);
         }
