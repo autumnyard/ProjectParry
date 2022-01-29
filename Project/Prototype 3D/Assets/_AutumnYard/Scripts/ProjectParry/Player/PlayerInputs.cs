@@ -5,9 +5,11 @@ namespace AutumnYard.ProjectParry
     {
         public float horizontalAxis;
         public float verticalAxis;
-        public bool attack;
+
+        public bool attackPressed;
+        public bool attackMaintain;
+
         public bool defensePressed;
         public bool defenseMaintain;
-        public bool defenseReleased;
     }
 }

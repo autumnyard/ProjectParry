@@ -165,6 +165,8 @@ MonoBehaviour:
   attack: {fileID: 1300287059202217057}
   parry: {fileID: 5488315380257398682}
   defense: {fileID: 6121722313708895716}
+  attackSpan: 0.2
+  parrySpan: 0.1
 --- !u!136 &4214347586774746281
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -340,7 +342,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1bd24ca5b650cc54c8d22ca27ec55520, type: 2}
+  - {fileID: 2100000, guid: ad608eb193bba354696a5927cc17bb0b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

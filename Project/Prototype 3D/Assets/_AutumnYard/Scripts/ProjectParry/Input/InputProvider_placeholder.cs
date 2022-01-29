@@ -10,7 +10,8 @@ namespace AutumnYard.ProjectParry
         {
             inputs.horizontalAxis = Input.GetAxis("Horizontal");
             inputs.verticalAxis = Input.GetAxis("Vertical");
-            inputs.attack = Input.GetKeyDown(KeyCode.Z);
+            inputs.attackPressed = Input.GetKeyDown(KeyCode.Z);
+            inputs.attackMaintain = Input.GetKey(KeyCode.Z);
             inputs.defensePressed = Input.GetKeyDown(KeyCode.X);
             inputs.defenseMaintain = Input.GetKey(KeyCode.X);
             inputs.defenseReleased = Input.GetKeyUp(KeyCode.X);

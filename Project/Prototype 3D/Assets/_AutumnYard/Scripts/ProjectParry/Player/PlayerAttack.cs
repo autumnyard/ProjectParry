@@ -62,10 +62,14 @@ namespace AutumnYard.ProjectParry
 
         public void UpdateWithInputs(in PlayerInputs inputs)
         {
-            if (inputs.attack)
+            if (inputs.attackPressed)
             {
                 parryCounter.Reset();
                 attackCounter.Reset();
+                _state = State.Attack;
+            }
+            else if(inputs.attackMaintain)
+            {
                 _state = State.Attack;
             }
             else if (inputs.defensePressed)
@@ -89,13 +93,13 @@ namespace AutumnYard.ProjectParry
             {
                 if (attackCounter.Tick(Time.deltaTime))
                 {
-                    _isAttacking = true;
+                    _isAttacking = false;
                     _isParrying = false;
                     _isDefending = false;
                 }
                 else
                 {
-                    _isAttacking = false;
+                    _isAttacking = true;
                     _isParrying = false;
                     _isDefending = false;
                 }
