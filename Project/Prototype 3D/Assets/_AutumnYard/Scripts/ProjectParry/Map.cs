@@ -10,10 +10,11 @@ namespace AutumnYard.ProjectParry
         [SerializeField] private Transform player1Spawn;
         [SerializeField] private Transform player2Spawn;
 
-        public void Enable(in PlayerMovement player)
+        public void Enable(in IPlayer player1, in IPlayer player2)
         {
             gameObject.SetActive(true);
-            player.Spawn(player1Spawn.position);
+            player1.Spawn(player1Spawn.position);
+            player2.Spawn(player2Spawn.position);
         }
 
         internal void Disable()

@@ -8,7 +8,8 @@ namespace AutumnYard.ProjectParry
     {
         public enum Map { Test1, Test2 }
 
-        [SerializeField] private PlayerMovement player;
+        [SerializeField] private PlayerActor player1;
+        [SerializeField] private PlayerActor player2;
         [SerializeField] private ProjectParry.Map[] maps;
         private Map _currentMap;
 
@@ -43,7 +44,7 @@ namespace AutumnYard.ProjectParry
 
             maps[(int)_currentMap].Disable();
             _currentMap = to;
-            maps[(int)_currentMap].Enable(in player);
+            maps[(int)_currentMap].Enable(player1, player2);
         }
     }
 }

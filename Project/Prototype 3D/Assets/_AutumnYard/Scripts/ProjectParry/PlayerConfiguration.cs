@@ -8,6 +8,6 @@ namespace AutumnYard.ProjectParry
     public sealed class PlayerConfiguration : ScriptableObject
     {
         public float speed = 7f;
-        public float agility = 7f;
+        public float maxSpeed = 15f;
     }
 }
