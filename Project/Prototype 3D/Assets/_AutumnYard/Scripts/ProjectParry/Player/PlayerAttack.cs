@@ -4,6 +4,35 @@ using UnityEngine;
 
 namespace AutumnYard.ProjectParry
 {
+    public class Counter
+    {
+        private readonly float maxTime;
+        private float currentTime;
+
+        public Counter(float time)
+        {
+            maxTime = time;
+            currentTime = 0;
+        }
+
+        public void Reset()
+        {
+            currentTime = maxTime;
+        }
+
+        public bool Tick(float elapsed)
+        {
+            currentTime -= elapsed;
+
+            return Check();
+        }
+
+        public bool Check()
+        {
+            return currentTime <= 0;
+        }
+    }
+
     public sealed class PlayerAttack : MonoBehaviour, IInputReceiver
     {
         [SerializeField] private GameObject attack;
@@ -12,8 +41,19 @@ namespace AutumnYard.ProjectParry
         [SerializeField] private float attackSpan = .2f; // TODO: El tiempo que aguanta el parry
         [SerializeField] private float parrySpan = .4f; // TODO: El tiempo que aguanta el parry
         private State _state;
+        private Counter attackCounter;
+        private Counter parryCounter;
+        private bool _isAttacking;
+        private bool _isParrying;
+        private bool _isDefending;
 
         public enum State { Blocked, Normal, Attack, Parry, Defense, Hurt }
+
+        private void Awake()
+        {
+            attackCounter = new Counter(attackSpan);
+            parryCounter = new Counter(parrySpan);
+        }
 
         private void OnEnable()
         {
@@ -24,11 +64,15 @@ namespace AutumnYard.ProjectParry
         {
             if (inputs.attack)
             {
+                parryCounter.Reset();
+                attackCounter.Reset();
                 _state = State.Attack;
             }
             else if (inputs.defensePressed)
             {
-                _state = State.Parry;
+                attackCounter.Reset();
+                parryCounter.Reset();
+                _state = State.Defense;
             }
             else if (inputs.defenseMaintain)
             {
@@ -36,18 +80,55 @@ namespace AutumnYard.ProjectParry
             }
             else
             {
+                attackCounter.Reset();
+                parryCounter.Reset();
                 _state = State.Normal;
             }
 
-            HandleState(in _state);
+            if (_state == State.Attack)
+            {
+                if (attackCounter.Tick(Time.deltaTime))
+                {
+                    _isAttacking = true;
+                    _isParrying = false;
+                    _isDefending = false;
+                }
+                else
+                {
+                    _isAttacking = false;
+                    _isParrying = false;
+                    _isDefending = false;
+                }
+            }
+            else if (_state == State.Defense)
+            {
+                if (parryCounter.Tick(Time.deltaTime))
+                {
+                    _isAttacking = false;
+                    _isParrying = false;
+                    _isDefending = true;
+                }
+                else
+                {
+                    _isAttacking = false;
+                    _isParrying = true;
+                    _isDefending = false;
+                }
+            }
+            else
+            {
+                _isAttacking = false;
+                _isParrying = false;
+                _isDefending = false;
+            }
+
+            attack.SetActive(_isAttacking);
+            parry.SetActive(_isParrying);
+            defense.SetActive(_isDefending);
+            //parry.SetActive(state == State.Parry);
+            //defense.SetActive(state == State.Defense);
         }
 
-        private void HandleState(in State state)
-        {
-            attack.SetActive(state == State.Attack);
-            parry.SetActive(state == State.Parry);
-            defense.SetActive(state == State.Defense);
-        }
 
         public void EndFrame()
         {

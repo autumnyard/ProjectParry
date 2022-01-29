@@ -326,6 +326,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1546775209691849671, guid: e2e07243d12a9e8419502d42b2bbb29c,
+        type: 3}
+      propertyPath: parrySpan
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4214347586774746280, guid: e2e07243d12a9e8419502d42b2bbb29c,
         type: 3}
       propertyPath: m_Name
