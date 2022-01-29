@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AutumnYard.ProjectParry
@@ -14,7 +12,6 @@ namespace AutumnYard.ProjectParry
             inputs.attackMaintain = Input.GetKey(KeyCode.Z);
             inputs.defensePressed = Input.GetKeyDown(KeyCode.X);
             inputs.defenseMaintain = Input.GetKey(KeyCode.X);
-            inputs.defenseReleased = Input.GetKeyUp(KeyCode.X);
         }
     }
 }

@@ -35,47 +35,46 @@ namespace AutumnYard.ProjectParry
 
     public sealed class PlayerAttack : MonoBehaviour, IInputReceiver
     {
+        public enum State { Blocked, Normal, Attack, Parry, Defense, Hurt }
         [SerializeField] private GameObject attack;
         [SerializeField] private GameObject parry;
         [SerializeField] private GameObject defense;
         [SerializeField] private float attackSpan = .2f; // TODO: El tiempo que aguanta el parry
         [SerializeField] private float parrySpan = .4f; // TODO: El tiempo que aguanta el parry
+        private Counter _attackCounter;
+        private Counter _parryCounter;
         private State _state;
-        private Counter attackCounter;
-        private Counter parryCounter;
-        private bool _isAttacking;
-        private bool _isParrying;
-        private bool _isDefending;
+        private State _newState;
 
-        public enum State { Blocked, Normal, Attack, Parry, Defense, Hurt }
 
         private void Awake()
         {
-            attackCounter = new Counter(attackSpan);
-            parryCounter = new Counter(parrySpan);
+            _attackCounter = new Counter(attackSpan);
+            _parryCounter = new Counter(parrySpan);
         }
 
         private void OnEnable()
         {
             _state = State.Normal;
+            _newState = State.Normal;
         }
 
         public void UpdateWithInputs(in PlayerInputs inputs)
         {
             if (inputs.attackPressed)
             {
-                parryCounter.Reset();
-                attackCounter.Reset();
+                _parryCounter.Reset();
+                _attackCounter.Reset();
                 _state = State.Attack;
             }
-            else if(inputs.attackMaintain)
+            else if (inputs.attackMaintain)
             {
                 _state = State.Attack;
             }
             else if (inputs.defensePressed)
             {
-                attackCounter.Reset();
-                parryCounter.Reset();
+                _attackCounter.Reset();
+                _parryCounter.Reset();
                 _state = State.Defense;
             }
             else if (inputs.defenseMaintain)
@@ -84,59 +83,29 @@ namespace AutumnYard.ProjectParry
             }
             else
             {
-                attackCounter.Reset();
-                parryCounter.Reset();
+                _attackCounter.Reset();
+                _parryCounter.Reset();
                 _state = State.Normal;
             }
 
-            if (_state == State.Attack)
+            switch (_state)
             {
-                if (attackCounter.Tick(Time.deltaTime))
-                {
-                    _isAttacking = false;
-                    _isParrying = false;
-                    _isDefending = false;
-                }
-                else
-                {
-                    _isAttacking = true;
-                    _isParrying = false;
-                    _isDefending = false;
-                }
-            }
-            else if (_state == State.Defense)
-            {
-                if (parryCounter.Tick(Time.deltaTime))
-                {
-                    _isAttacking = false;
-                    _isParrying = false;
-                    _isDefending = true;
-                }
-                else
-                {
-                    _isAttacking = false;
-                    _isParrying = true;
-                    _isDefending = false;
-                }
-            }
-            else
-            {
-                _isAttacking = false;
-                _isParrying = false;
-                _isDefending = false;
+                case State.Attack:
+                    _newState = _attackCounter.Tick(Time.deltaTime) ? State.Normal : State.Attack;
+                    break;
+
+                case State.Defense:
+                    _newState = _parryCounter.Tick(Time.deltaTime) ? State.Defense : State.Parry;
+                    break;
+
+                default:
+                    _newState = State.Normal;
+                    break;
             }
 
-            attack.SetActive(_isAttacking);
-            parry.SetActive(_isParrying);
-            defense.SetActive(_isDefending);
-            //parry.SetActive(state == State.Parry);
-            //defense.SetActive(state == State.Defense);
-        }
-
-
-        public void EndFrame()
-        {
-
+            attack.SetActive(_newState == State.Attack);
+            parry.SetActive(_newState == State.Parry);
+            defense.SetActive(_newState == State.Defense);
         }
 
 
