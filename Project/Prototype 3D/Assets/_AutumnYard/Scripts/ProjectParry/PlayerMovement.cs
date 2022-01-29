@@ -26,10 +26,18 @@ namespace AutumnYard.ProjectParry
             _maxSpeed = _curSpeed;
 
             // Move senteces
-            _rb.velocity = new Vector3(
+            var asd = new Vector3(
                 Mathf.Lerp(0, Input.GetAxis("Horizontal") * _curSpeed, 0.8f),
                 0f,
                 Mathf.Lerp(0, Input.GetAxis("Vertical") * _curSpeed, 0.8f));
+
+            //_rb.velocity = asd;
+            _rb.AddForce(asd, ForceMode.VelocityChange);
+        }
+
+        public void Spawn(Vector3 position)
+        {
+            transform.position = position;
         }
     }
 }

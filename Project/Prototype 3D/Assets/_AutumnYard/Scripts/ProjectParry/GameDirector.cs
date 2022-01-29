@@ -6,26 +6,44 @@ namespace AutumnYard.ProjectParry
 {
     public sealed class GameDirector : Core.SingleInstance<GameDirector>
     {
-        public enum Map { None, Test1, Test2 }
+        public enum Map { Test1, Test2 }
 
-        [SerializeField] private GameObject[] maps;
-        private GameObject _currentMapGO;
+        [SerializeField] private PlayerMovement player;
+        [SerializeField] private ProjectParry.Map[] maps;
         private Map _currentMap;
 
         protected override void Awake()
         {
             base.Awake();
 
-            SetMap(Map.Test1);
+            foreach (var item in maps)
+            {
+                item.Disable();
+            }
+
+            SetMap(Map.Test1, true);
         }
 
-        public void SetMap(Map to)
+
+        private void Update()
         {
-            if (to == _currentMap) return;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetMap(Map.Test1, false);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetMap(Map.Test2, false);
+            }
+        }
 
+        public void SetMap(Map to, bool force)
+        {
+            if (!force && to == _currentMap) return;
+
+            maps[(int)_currentMap].Disable();
             _currentMap = to;
-
-            _currentMapGO = Instantiate(maps[(int)_currentMap]);
+            maps[(int)_currentMap].Enable(in player);
         }
     }
 }

@@ -1,21 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace AutumnYard.ProjectParry
 {
-    public class Map : MonoBehaviour
+    public sealed class Map : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] private Transform player1Spawn;
+        [SerializeField] private Transform player2Spawn;
+
+        public void Enable(in PlayerMovement player)
         {
-        
+            gameObject.SetActive(true);
+            player.Spawn(player1Spawn.position);
         }
 
-        // Update is called once per frame
-        void Update()
+        internal void Disable()
         {
-        
+            gameObject.SetActive(false);
         }
     }
 }
