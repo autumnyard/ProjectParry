@@ -8,12 +8,14 @@ namespace AutumnYard.ProjectParry
     {
         [SerializeField, Range(1, 2)] private int playerNumber = 1;
         [SerializeField] private PlayerConfiguration configuration;
+        private IInputProvider _inputProvider;
         private PlayerMovement _movement;
         private PlayerAttack _attack;
         private PlayerInputs _inputs;
 
         private void Awake()
         {
+            _inputProvider = new InputProvider_placeholder();
             _movement = new PlayerMovement(configuration, GetComponent<Rigidbody>());
             _attack = GetComponent<PlayerAttack>();
             _inputs = new PlayerInputs();
@@ -23,12 +25,7 @@ namespace AutumnYard.ProjectParry
         {
             if (playerNumber == 1)
             {
-                _inputs.horizontalAxis = Input.GetAxis("Horizontal");
-                _inputs.verticalAxis = Input.GetAxis("Vertical");
-                _inputs.attack = Input.GetKeyDown(KeyCode.Z);
-                _inputs.defensePressed = Input.GetKeyDown(KeyCode.X);
-                _inputs.defenseMaintain = Input.GetKey(KeyCode.X);
-                _inputs.defenseReleased = Input.GetKeyUp(KeyCode.X);
+                _inputProvider.GetInputs(ref _inputs);
             }
             else
             {
