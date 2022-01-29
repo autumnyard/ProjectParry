@@ -2,34 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace AutumnYard.ProjectParry
 {
-    // Normal Movements Variables
-    private float walkSpeed;
-    private float curSpeed;
-    private float maxSpeed;
-
-    [SerializeField] private float speed = 7f;
-    [SerializeField] private float agility = 7f;
-    private float sprintSpeed;
-    private Rigidbody rigidbody;
-
-    void Start()
+    public sealed class PlayerMovement : MonoBehaviour
     {
-        walkSpeed = (float)(agility / 5);
-        sprintSpeed = walkSpeed + (walkSpeed / 2);
-        rigidbody = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private PlayerConfiguration configuration;
+        private Rigidbody _rb;
+        private float _sprintSpeed;
+        private float _walkSpeed;
+        private float _curSpeed;
+        private float _maxSpeed;
 
-    void FixedUpdate()
-    {
-        curSpeed = walkSpeed;
-        maxSpeed = curSpeed;
+        void Start()
+        {
+            _walkSpeed = (float)(configuration.agility / 5);
+            _sprintSpeed = _walkSpeed + (_walkSpeed / 2);
+            _rb = GetComponent<Rigidbody>();
+        }
 
-        // Move senteces
-        rigidbody.velocity = new Vector3(
-            Mathf.Lerp(0, Input.GetAxis("Horizontal") * curSpeed, 0.8f),
-            0f,
-            Mathf.Lerp(0, Input.GetAxis("Vertical") * curSpeed, 0.8f));
+        void FixedUpdate()
+        {
+            _curSpeed = _walkSpeed;
+            _maxSpeed = _curSpeed;
+
+            // Move senteces
+            _rb.velocity = new Vector3(
+                Mathf.Lerp(0, Input.GetAxis("Horizontal") * _curSpeed, 0.8f),
+                0f,
+                Mathf.Lerp(0, Input.GetAxis("Vertical") * _curSpeed, 0.8f));
+        }
     }
 }
